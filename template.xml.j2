@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dsq="http://www.disqus.com/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:wp="http://wordpress.org/export/1.0/"
+>
+  <channel>
+  {% for comment in comments %}
+    <item>
+      <!-- title of article -->
+      <title>{{ comment.thread.title}}</title>
+      <!-- absolute URI to article -->
+      <link>{{ website_url}}{{ comment.thread.uri}}</link>
+      <!-- body of the page or post; use cdata; html allowed (though will be formatted to DISQUS specs) -->
+      <content:encoded></content:encoded>
+      <!-- value used within disqus_identifier; usually internal identifier of article -->
+      <dsq:thread_identifier></dsq:thread_identifier>
+      <!-- creation date of thread (article), in GMT. Must be YYYY-MM-DD HH:MM:SS 24-hour format. -->
+      <wp:post_date_gmt></wp:post_date_gmt>
+      <!-- open/closed values are acceptable -->
+      <wp:comment_status>open</wp:comment_status>
+      <wp:comment>
+        <!-- internal id of comment -->
+        <wp:comment_id>{{ comment.id }}</wp:comment_id>
+        <!-- author display name -->
+        <wp:comment_author>{{ comment.author if comment.author != None }}</wp:comment_author>
+        <!-- author email address -->
+        <wp:comment_author_email>{{ comment.email if comment.email != None }}</wp:comment_author_email>
+        <!-- author url, optional -->
+        <wp:comment_author_url>{{ comment.website if comment.website != None }}</wp:comment_author_url>
+        <!-- author ip address -->
+        <wp:comment_author_IP>{{ comment.remote_addr }}</wp:comment_author_IP>
+        <!-- comment datetime, in GMT. Must be YYYY-MM-DD HH:MM:SS 24-hour format. -->
+        <wp:comment_date_gmt>{{ comment.created_time.strftime('%Y-%m-%d %X') }}</wp:comment_date_gmt>
+        <!-- comment body; use cdata; html allowed (though will be formatted to DISQUS specs) -->
+        <wp:comment_content><![CDATA[{{ comment.text }}]]></wp:comment_content>
+        <!-- is this comment approved? 0/1 -->
+        <wp:comment_approved>1</wp:comment_approved>
+        <!-- parent id (match up with wp:comment_id) -->
+        <wp:comment_parent>{{ comment.parent if comment.parent != None }}</wp:comment_parent>
+      </wp:comment>
+    </item>
+    {% endfor %}
+  </channel>
+</rss>
