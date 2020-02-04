@@ -23,4 +23,4 @@ export WEBSITE_URL=https://blog.tld DB_FILE_PATH=comments.db
 python isso-to-disqus.py
 ```
 
-Once you crate a new Disqus community, you can import the XML file from the settings, or [import.disqus.com](https://import.disqus.com/).
+Once you create a new Disqus community, you can import the XML file from the settings, or [import.disqus.com](https://import.disqus.com/).
